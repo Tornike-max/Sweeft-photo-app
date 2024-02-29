@@ -5,10 +5,12 @@ import { getSingleImage } from "../api/data";
 export const useGetSingleImage = () => {
   const [searchParams] = useSearchParams();
   const imageId = searchParams.get("imageId");
-  const { data, isPending } = useQuery({
+  const { data, isPending, error } = useQuery({
     queryKey: ["image", imageId],
     queryFn: () => getSingleImage(imageId || ""),
   });
+
+  if (error) throw new Error("Error while fetching data");
 
   return { data, isPending };
 };

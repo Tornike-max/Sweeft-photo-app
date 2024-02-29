@@ -1,11 +1,12 @@
 import Images from "../components/Images";
 import { useGetImages } from "../hooks/useGetImages";
 import ImageType from "../types/types";
+import Spinner from "../ui/Spinner";
 
 export default function HomePage() {
   const { data, isPending } = useGetImages();
 
-  if (isPending) return <p className="text-center mt-8">Loading...</p>;
+  if (isPending) return <Spinner width={20} height={20} />;
 
   return (
     <div className="container mx-auto px-4 py-8">

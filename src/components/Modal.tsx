@@ -4,6 +4,7 @@ import { formatNumbers } from "../ui/formatNumbers";
 import { Key, useEffect, useState } from "react";
 import { Blurhash } from "react-blurhash";
 import ImageType from "../types/types";
+import { MdOutlineLocationOn } from "react-icons/md";
 
 type ModalType = {
   open: boolean;
@@ -27,7 +28,7 @@ export default function Modal({ open, onClose, data, src }: ModalType) {
   useEffect(() => {
     const updateHeight = () => {
       const viewportHeight = window.innerHeight;
-      const maxHeight = 550;
+      const maxHeight = 700;
       const newHeight = `${Math.min(viewportHeight, maxHeight)}px`;
       setHeight(newHeight);
     };
@@ -41,7 +42,8 @@ export default function Modal({ open, onClose, data, src }: ModalType) {
     };
   }, []);
 
-  console.log(data);
+  console.log("rerender");
+
   return (
     <div
       onClick={onClose}
@@ -64,7 +66,9 @@ export default function Modal({ open, onClose, data, src }: ModalType) {
           />
           <div className="flex flex-col justify-center items-start text-slate-900 font-semibold text-sm sm:text-md">
             <p className="font-semibold">{data.user.name}</p>
-            <p className="text-slate-700">{data.user.location}</p>
+            <p className="text-slate-700">
+              {data.user.location || "No Location Provided"}
+            </p>
           </div>
         </div>
 
@@ -111,6 +115,10 @@ export default function Modal({ open, onClose, data, src }: ModalType) {
         <div className="w-full py-2">
           <div className="w-full flex justify-center items-start flex-col mt-4 overflow-y-auto max-h-48">
             <div className="flex items-center gap-2">
+              <MdOutlineLocationOn className="text-lg" />
+              <p>{data.user.location || "No Location Provided"}</p>
+            </div>
+            <div className="flex items-center gap-2">
               <HiOutlineCalendarDays className="text-lg" />
               <p>Published {formatDate(data.created_at)}</p>
             </div>
@@ -118,15 +126,11 @@ export default function Modal({ open, onClose, data, src }: ModalType) {
               <HiOutlineCamera className="text-lg" />
               <p>{data.exif.name}</p>
             </div>
-            <div className="flex items-center gap-2">
-              <HiOutlineCalendarDays className="text-lg" />
-              <p>Published {formatDate(data.created_at)}</p>
-            </div>
           </div>
         </div>
 
         <div className="w-full py-2">
-          <div className="w-full flex justify-center items-center gap-2 flex-wrap">
+          <div className="w-full flex justify-start items-center gap-2 flex-wrap">
             {data.tags.map((tag: { title: string }, i: Key) => (
               <span
                 key={i}
