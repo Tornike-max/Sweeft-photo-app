@@ -1,18 +1,46 @@
-import { useGetSingleImage } from "../hooks/useGetSingleImage";
 import { HiOutlineCalendarDays, HiOutlineCamera } from "react-icons/hi2";
 import { formatDate } from "../ui/formatDate";
 import { formatNumbers } from "../ui/formatNumbers";
-import { Key } from "react";
+import { Key, useEffect, useState } from "react";
+import { Blurhash } from "react-blurhash";
+import ImageType from "../types/types";
 
 type ModalType = {
   open: boolean;
   onClose: () => void;
+  data: ImageType;
+  src: string;
 };
 
-export default function Modal({ open, onClose }: ModalType) {
-  const { data, isPending } = useGetSingleImage();
+export default function Modal({ open, onClose, data, src }: ModalType) {
+  const [imageLoaded, setImageLoaded] = useState(false);
+  const [height, setHeight] = useState("");
 
-  if (isPending) return <p>Loading...</p>;
+  useEffect(() => {
+    const image = new Image();
+    image.onload = () => {
+      setImageLoaded(true);
+    };
+    image.src = src;
+  }, [src]);
+
+  useEffect(() => {
+    const updateHeight = () => {
+      const viewportHeight = window.innerHeight;
+      const maxHeight = 550;
+      const newHeight = `${Math.min(viewportHeight, maxHeight)}px`;
+      setHeight(newHeight);
+    };
+
+    updateHeight();
+
+    window.addEventListener("resize", updateHeight);
+
+    return () => {
+      window.removeEventListener("resize", updateHeight);
+    };
+  }, []);
+
   console.log(data);
   return (
     <div
@@ -40,7 +68,21 @@ export default function Modal({ open, onClose }: ModalType) {
           </div>
         </div>
 
-        <img className="w-full h-auto" src={data.urls.full} alt={data.id} />
+        {!imageLoaded && (
+          <Blurhash
+            hash={data.blur_hash}
+            width={"100%"}
+            height={height}
+            resolutionX={32}
+            resolutionY={32}
+            punch={1}
+          />
+        )}
+
+        {imageLoaded && (
+          <img className="w-full h-auto" src={src} alt={data.id} />
+        )}
+
         <div className="w-full flex justify-start items-center gap-10 pt-2">
           <div className="flex flex-col justify-center items-start">
             <p className="text-slate-700 font-semibold">Views</p>
@@ -60,6 +102,10 @@ export default function Modal({ open, onClose }: ModalType) {
               {formatNumbers(data.likes)}
             </p>
           </div>
+        </div>
+
+        <div className="w-full py-2 flex justify-start items-center">
+          <p className="text-sm">{data.alt_description}</p>
         </div>
 
         <div className="w-full py-2">

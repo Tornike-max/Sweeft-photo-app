@@ -26,7 +26,28 @@ interface UserProfile {
   };
 }
 
+interface Exif {
+  aperture: string;
+  exposure_time: string;
+  focal_length: string;
+  iso: number;
+  make: string;
+  model: string;
+  name: string;
+}
+
+interface Tag {
+  type: string;
+  title: string;
+  source?: unknown;
+}
+
 interface ImageType {
+  alt_description: string;
+  views: number;
+  downloads: number;
+  exif: Exif;
+  tags: Tag[];
   id: string;
   created_at: string;
   updated_at: string;
