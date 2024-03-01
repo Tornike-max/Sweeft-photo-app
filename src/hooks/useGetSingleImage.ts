@@ -6,7 +6,7 @@ export const useGetSingleImage = () => {
   const [searchParams] = useSearchParams();
   const imageId = searchParams.get("imageId");
   const { data, isPending, error } = useQuery({
-    queryKey: ["image", imageId],
+    queryKey: ["images", imageId],
     queryFn: () => getSingleImage(imageId || ""),
   });
 

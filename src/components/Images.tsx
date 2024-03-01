@@ -52,7 +52,7 @@ const Images = memo(
             onLoad={() => setImageLoaded(true)}
             src={images.urls.regular}
             alt={images.description}
-            className={` w-full h-64 object-cover ${
+            className={`w-full h-64 object-cover transition-transform duration-300 hover:shadow-lg cursor-pointer hover:scale-105 ${
               !imageLoaded ? "hidden" : "inline"
             }`}
             loading="lazy"
