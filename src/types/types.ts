@@ -87,3 +87,8 @@ export interface SearchResultType {
   total_pages: number;
   results: ImageType[];
 }
+
+export interface SearchedValue {
+  value: string;
+  id: number;
+}

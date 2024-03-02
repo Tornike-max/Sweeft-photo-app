@@ -58,13 +58,13 @@ export default function Modal({ open, onClose }: ModalType) {
       onClick={handleClose}
     >
       <div
-        onClick={(e) => e.stopPropagation()}
+        onClick={(e) => e.stopPropagation()} // Prevent propagation of click events
         className={`bg-gray-100 rounded-t-xl overflow-y-auto shadow-lg px-4 transition-all ${
           open ? "scale-100 opacity-100 " : "scale-125 opacity-0"
         }`}
         style={{ width: "80%", maxHeight: "100%" }}
       >
-        <UserInfo data={data} />
+        <UserInfo data={data} onClose={onClose} />
         <ImageContent
           data={data}
           imageLoaded={imageLoaded}

@@ -26,7 +26,7 @@ const ImageContent = ({
       )}
       {imageLoaded && (
         <img
-          className="w-full h-auto"
+          className="w-full h-auto rounded-t-lg"
           src={data.urls.regular}
           alt={data.id}
           onLoad={() => setImageLoaded(true)}

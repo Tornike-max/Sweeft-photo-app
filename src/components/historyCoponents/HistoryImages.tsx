@@ -28,16 +28,21 @@ export default function HistoryImages({ image }: { image: ImageType }) {
         )}
       </div>
       {imageLoaded && (
-        <img
-          key={image.id}
-          onLoad={() => setImageLoaded(true)}
-          src={image?.urls.regular}
-          alt={image?.description}
-          className={`w-full h-64 object-cover transition-transform duration-300 hover:shadow-lg cursor-pointer hover:scale-105 ${
-            !imageLoaded ? "hidden" : "inline"
-          }`}
-          loading="lazy"
-        />
+        <div className="flex justify-center items-center flex-col w-full rounded-b-lg bg-slate-200">
+          <img
+            key={image.id}
+            onLoad={() => setImageLoaded(true)}
+            src={image?.urls.regular}
+            alt={image?.description}
+            className={`w-full h-64 object-cover transition-transform duration-300 hover:shadow-lg cursor-pointer hover:scale-105 rounded-t-lg ${
+              !imageLoaded ? "hidden" : "inline"
+            }`}
+            loading="lazy"
+          />
+          <div className="w-full flex justify-start items-center px-3 py-2">
+            hello
+          </div>
+        </div>
       )}
     </>
   );

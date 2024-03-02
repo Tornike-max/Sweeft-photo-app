@@ -5,6 +5,7 @@ import { IMAGES_PER_PAGE } from "../contstants/constants";
 
 export const useGetImages = (searchedVal: string) => {
   const perPage = IMAGES_PER_PAGE;
+
   const {
     data,
     isPending,
@@ -16,10 +17,7 @@ export const useGetImages = (searchedVal: string) => {
     queryKey: ["images", perPage, searchedVal],
     queryFn: ({ pageParam }) => getImages({ pageParam, perPage, searchedVal }),
     initialPageParam: 1,
-    getNextPageParam: (lastPage, pages) => {
-      if (lastPage.length < IMAGES_PER_PAGE) {
-        return undefined;
-      }
+    getNextPageParam: (pages) => {
       return pages.length + 1;
     },
   });
