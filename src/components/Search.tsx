@@ -1,16 +1,19 @@
 import { useState, useEffect } from "react";
 import { useDebounce } from "../hooks/useDebounce";
 import { useSearchParams } from "react-router-dom";
+import { useSearchContext } from "../context/contextHook/useSearchContext";
 
 export default function Search() {
   const [query, setQuery] = useState<string>("");
   const [searchParams, setSearchParams] = useSearchParams();
   const debouncedQuery = useDebounce(query, 700);
+  const { handleAddSearchValue } = useSearchContext();
 
   useEffect(() => {
     if (debouncedQuery === "") return;
     searchParams.set("search", debouncedQuery);
     setSearchParams(searchParams);
+    handleAddSearchValue(debouncedQuery);
   }, [debouncedQuery]);
 
   const handleSearch = (value: string) => {

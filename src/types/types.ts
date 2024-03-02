@@ -4,7 +4,7 @@ interface ProfileImage {
   large: string;
 }
 
-interface UserProfile {
+export interface UserProfile {
   id: string;
   username: string;
   name: string;
@@ -42,7 +42,13 @@ interface Tag {
   source?: unknown;
 }
 
+interface LocationType {
+  city: string;
+  country: string;
+  name: string;
+}
 interface ImageType {
+  location: LocationType;
   alt_description: string;
   views: number;
   downloads: number;
@@ -75,3 +81,9 @@ interface ImageType {
 }
 
 export default ImageType;
+
+export interface SearchResultType {
+  total: number;
+  total_pages: number;
+  results: ImageType[];
+}

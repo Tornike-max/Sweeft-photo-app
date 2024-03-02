@@ -1,1 +1,1 @@
-export const MAX_IMAGE = 10;
+export const IMAGES_PER_PAGE = 20;

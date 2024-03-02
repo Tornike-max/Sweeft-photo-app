@@ -1,9 +1,10 @@
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { getImages } from "../api/data";
 import toast from "react-hot-toast";
-import { MAX_IMAGE } from "../contstants/constants";
+import { IMAGES_PER_PAGE } from "../contstants/constants";
 
-export const useGetImages = () => {
+export const useGetImages = (searchedVal: string) => {
+  const perPage = IMAGES_PER_PAGE;
   const {
     data,
     isPending,
@@ -12,14 +13,14 @@ export const useGetImages = () => {
     isFetchingNextPage,
     hasNextPage,
   } = useInfiniteQuery({
-    queryKey: ["images"],
-    queryFn: getImages,
+    queryKey: ["images", perPage, searchedVal],
+    queryFn: ({ pageParam }) => getImages({ pageParam, perPage, searchedVal }),
     initialPageParam: 1,
-    getNextPageParam: (lastPage, allPages) => {
-      if (lastPage.length < MAX_IMAGE) {
+    getNextPageParam: (lastPage, pages) => {
+      if (lastPage.length < IMAGES_PER_PAGE) {
         return undefined;
       }
-      return allPages.length + 1;
+      return pages.length + 1;
     },
   });
 

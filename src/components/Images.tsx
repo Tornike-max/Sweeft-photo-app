@@ -1,14 +1,11 @@
 import { memo, useCallback, useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import ImageType from "../types/types";
-import Modal from "./Modal";
+import Modal from "./modal/Modal";
 import { Blurhash } from "react-blurhash";
-import { useGetSingleImage } from "../hooks/useGetSingleImage";
 
 const Images = memo(
   ({ images }: { images: ImageType }) => {
-    const { data, isPending } = useGetSingleImage();
-
     const [open, setOpen] = useState(false);
     const [imageLoaded, setImageLoaded] = useState(false);
     const [searchParams, setSearchParams] = useSearchParams();
@@ -77,14 +74,9 @@ const Images = memo(
             </div>
           </div>
         </div>
-        {!isPending && open && (
+        {open && (
           <div className="w-full">
-            <Modal
-              data={data}
-              src={data.urls.full}
-              open={open}
-              onClose={() => setOpen(false)}
-            />
+            <Modal open={open} onClose={() => setOpen(false)} />
           </div>
         )}
       </div>
