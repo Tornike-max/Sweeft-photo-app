@@ -15,7 +15,7 @@ import ErrorFallback from "./ui/ErrorFallback.tsx";
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
-      staleTime: 30000,
+      staleTime: 60000,
     },
   },
 });

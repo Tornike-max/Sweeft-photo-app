@@ -17,7 +17,9 @@ export const useGetImages = (searchedVal: string) => {
     queryKey: ["images", perPage, searchedVal],
     queryFn: ({ pageParam }) => getImages({ pageParam, perPage, searchedVal }),
     initialPageParam: 1,
-    getNextPageParam: (pages) => {
+    getNextPageParam: (lastPage, pages) => {
+      if (lastPage.length < 1) return;
+
       return pages.length + 1;
     },
   });

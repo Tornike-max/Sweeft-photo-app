@@ -1,39 +1,41 @@
 import React from "react";
-import { useSearchParams } from "react-router-dom";
+import { useLocation, useSearchParams } from "react-router-dom";
 import { SearchedValue } from "../../types/types";
 
-export default function SearchedValues({
+const SearchedValues = ({
   searchedValues,
 }: {
   searchedValues: SearchedValue[];
-}) {
+}) => {
   const [searchParams, setSearchParams] = useSearchParams();
+  const { pathname } = useLocation();
 
   const handleSearchTermClick = (e: React.MouseEvent, val: string) => {
     e.preventDefault();
     searchParams.set("search", val);
     setSearchParams(searchParams);
   };
-
   return (
-    <div className="m-auto max-w-2xl w-full h-auto flex justify-center items-center flex-wrap gap-2 bg-slate-200 py-3 px-4 rounded-md">
+    <div className="m-auto max-w-2xl w-full h-36 overflow-y-auto flex flex-wrap justify-center items-center gap-4 py-3 px-4 rounded-md bg-gray-100 shadow-md">
       {searchedValues.length > 0 ? (
         searchedValues.map((val) => (
           <button
-            onClick={(e) => handleSearchTermClick(e, val.value)}
             key={val.id}
-            className="rounded-lg bg-white py-2 px-4 shadow-md hover:shadow-xl duration-150 transition-all cursor-pointer text-indigo-600"
+            onClick={(e) => handleSearchTermClick(e, val.value)}
+            className={`py-2 px-3 rounded-lg border-[1px] border-indigo-500 ${
+              pathname?.slice(1) === val?.value
+                ? "bg-indigo-500 text-white"
+                : "bg-none"
+            }`}
           >
             {val.value}
           </button>
         ))
       ) : (
-        <div className="w-full flex justify-center items-center">
-          <p className="text-lg text-gray-600 font-semibold">
-            No Search Values!
-          </p>
-        </div>
+        <p className="text-lg text-gray-600 font-semibold">No Search Values!</p>
       )}
     </div>
   );
-}
+};
+
+export default SearchedValues;

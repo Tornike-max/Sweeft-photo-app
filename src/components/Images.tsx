@@ -15,6 +15,10 @@ const Images = memo(({ images }: { images: ImageType }) => {
       setImageLoaded(true);
     };
     image.src = images.urls.regular;
+    image.onerror = () => {
+      // Handle error if image fails to load
+      setImageLoaded(true);
+    };
   }, [images.urls.regular]);
 
   const handleClickImage = useCallback(
@@ -29,31 +33,28 @@ const Images = memo(({ images }: { images: ImageType }) => {
 
   return (
     <div className="rounded-lg overflow-hidden shadow-lg">
-      <div className={`${imageLoaded ? "hidden" : "inline"}`}>
-        {!imageLoaded && (
-          <Blurhash
-            hash={images.blur_hash}
-            width={"100%"}
-            height={"256px "}
-            resolutionX={32}
-            resolutionY={32}
-            punch={1}
-          />
-        )}
-      </div>
-
-      {imageLoaded && (
-        <img
-          onLoad={() => setImageLoaded(true)}
-          src={images.urls.regular}
-          alt={images.description}
-          className={`w-full h-64 object-cover transition-transform duration-300 hover:shadow-lg cursor-pointer hover:scale-105 ${
-            !imageLoaded ? "hidden" : "inline"
-          }`}
-          loading="lazy"
-          onClick={(e) => handleClickImage(e, images.id)}
+      {!imageLoaded && (
+        <Blurhash
+          hash={images.blur_hash}
+          width={"100%"}
+          height={"256px "}
+          resolutionX={32}
+          resolutionY={32}
+          punch={1}
         />
       )}
+
+      <img
+        onLoad={() => setImageLoaded(true)}
+        onError={() => setImageLoaded(true)}
+        src={images.urls.regular}
+        alt={images.description}
+        className={`w-full h-64 object-cover transition-transform duration-300 hover:shadow-lg cursor-pointer hover:scale-105 ${
+          !imageLoaded ? "hidden" : "inline"
+        }`}
+        loading="lazy"
+        onClick={(e) => handleClickImage(e, images.id)}
+      />
 
       <div className="px-4 py-3">
         <div className="flex items-center gap-2">
@@ -72,6 +73,7 @@ const Images = memo(({ images }: { images: ImageType }) => {
           </div>
         </div>
       </div>
+
       {open && (
         <div className="w-full">
           <Modal open={open} onClose={() => setOpen(false)} />

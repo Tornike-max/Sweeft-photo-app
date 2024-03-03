@@ -1,5 +1,6 @@
 import { Blurhash } from "react-blurhash";
 import ImageType from "../../types/types";
+import { useState } from "react";
 
 const ImageContent = ({
   data,
@@ -12,6 +13,11 @@ const ImageContent = ({
   setImageLoaded: React.Dispatch<React.SetStateAction<boolean>>;
   height: string;
 }) => {
+  const [zoomed, setIsZoomed] = useState(false);
+  const handleZoomImage = () => {
+    setIsZoomed((zoomed) => !zoomed);
+  };
+
   return (
     <>
       {!imageLoaded && (
@@ -26,10 +32,15 @@ const ImageContent = ({
       )}
       {imageLoaded && (
         <img
-          className="w-full h-auto rounded-t-lg"
+          className={`w-full max-h-[calc(${
+            zoomed ? "100vh-4.5rem" : "100vh-4rem"
+          })] object-contain rounded-t-lg  cursor-${
+            zoomed ? "zoom-out" : "zoom-in"
+          }`}
           src={data.urls.regular}
           alt={data.id}
           onLoad={() => setImageLoaded(true)}
+          onClick={handleZoomImage}
         />
       )}
     </>

@@ -4,6 +4,7 @@ import Images from "../Images";
 import { useGetImages } from "../../hooks/useGetImages";
 import { useInView } from "react-intersection-observer";
 import Spinner from "../../ui/Spinner";
+import ErrorData from "../../ui/ErrorData";
 
 export default function HistorySearchedImages({
   serchedVal,
@@ -15,12 +16,19 @@ export default function HistorySearchedImages({
   const { ref, inView } = useInView();
 
   useEffect(() => {
-    if (inView) {
+    if (hasNextPage && inView) {
       fetchNextPage();
     }
-  }, [inView, hasNextPage, isFetchingNextPage, fetchNextPage]);
+  }, [inView, hasNextPage, fetchNextPage]);
 
-  if (isPending) return null;
+  if (isPending)
+    return (
+      <div className="w-full flex justify-center items-center mt-20">
+        <Spinner />
+      </div>
+    );
+
+  if (serchedVal && data && data.pages[0].total === 0) return <ErrorData />;
 
   return (
     <div className="container mx-auto my-4">
@@ -36,7 +44,7 @@ export default function HistorySearchedImages({
           : "No Data"}
       </div>
       <div className="w-full flex justify-center items-center pt-8" ref={ref}>
-        {isFetchingNextPage && <Spinner width={10} height={10} />}
+        {isFetchingNextPage && <Spinner />}
         {!hasNextPage && (
           <p className="text-red-500 font-semibold text-lg">No More Page!</p>
         )}

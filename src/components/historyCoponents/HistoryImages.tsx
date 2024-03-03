@@ -39,9 +39,6 @@ export default function HistoryImages({ image }: { image: ImageType }) {
             }`}
             loading="lazy"
           />
-          <div className="w-full flex justify-start items-center px-3 py-2">
-            hello
-          </div>
         </div>
       )}
     </>

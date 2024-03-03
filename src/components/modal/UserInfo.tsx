@@ -16,7 +16,7 @@ const UserInfo = ({ data, onClose }: UserInfoProps) => {
           className="rounded-full w-8 h-8 sm:w-10 sm:h-10"
         />
         <div className="flex flex-col justify-center items-start text-slate-900 font-semibold text-sm sm:text-md">
-          <p className="font-semibold">{data?.user.name}</p>
+          <p className="font-semibold">{data?.user?.name}</p>
           <p className="text-slate-700">
             {data?.user?.location || "No Location Provided"}
           </p>

@@ -29,6 +29,7 @@ const SearchContext = ({ children }: { children: React.ReactNode }) => {
   }, []);
 
   const handleAddSearchValue = (newValue: string) => {
+    if (searchedValues.find((val) => val.value === newValue)) return;
     const newSearchValue = { value: newValue, id: Date.now() };
     setSearchedValues((prevValues) => [...prevValues, newSearchValue]);
     localStorage.setItem(
