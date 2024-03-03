@@ -16,7 +16,6 @@ const Images = memo(({ images }: { images: ImageType }) => {
     };
     image.src = images.urls.regular;
     image.onerror = () => {
-      // Handle error if image fails to load
       setImageLoaded(true);
     };
   }, [images.urls.regular]);

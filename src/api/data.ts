@@ -39,16 +39,14 @@ export const getImages = async ({
   } catch (error) {
     if (axios.isAxiosError(error)) {
       if (error.response) {
-        throw new Error(
-          `Error: ${error.response.status} - ${error.response.data}`
-        );
+        throw new Error(`${error.response.status} - ${error.response.data}`);
       } else if (error.request) {
-        throw new Error("Error: No response received from the server");
+        throw new Error("No response received from the server");
       } else {
-        throw new Error(`Error: ${error.message}`);
+        throw new Error(`${error.message}`);
       }
     } else {
-      throw new Error(`Error: ${error}`);
+      throw new Error(`${error}`);
     }
   }
 };
@@ -65,16 +63,14 @@ export const getSingleImage = async (imageId: string) => {
   } catch (error) {
     if (axios.isAxiosError(error)) {
       if (error.response) {
-        throw new Error(
-          `Error: ${error.response.status} - ${error.response.data}`
-        );
+        throw new Error(`${error.response.status} - ${error.response.data}`);
       } else if (error.request) {
-        throw new Error("Error: No response received from the server");
+        throw new Error("No response received from the server");
       } else {
-        throw new Error(`Error: ${error.message}`);
+        throw new Error(`${error.message}`);
       }
     } else {
-      throw new Error(`Error: ${error}`);
+      throw new Error(`${error}`);
     }
   }
 };
@@ -93,16 +89,14 @@ export const getUserImageByUsername = async (username: string) => {
   } catch (error) {
     if (axios.isAxiosError(error)) {
       if (error.response) {
-        throw new Error(
-          `Error: ${error.response.status} - ${error.response.data}`
-        );
+        throw new Error(`${error.response.status} - ${error.response.data}`);
       } else if (error.request) {
-        throw new Error("Error: No response received from the server");
+        throw new Error("No response received from the server");
       } else {
-        throw new Error(`Error: ${error.message}`);
+        throw new Error(`${error.message}`);
       }
     } else {
-      throw new Error(`Error: ${error}`);
+      throw new Error(`${error}`);
     }
   }
 };
